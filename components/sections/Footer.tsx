@@ -9,8 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription
-} from '@/components/ui/dialog'; // ✅ Use your shadcn/ui dialog
-
+} from '@/components/ui/dialog';
 export default function Footer() {
   return (
     <footer className="py-12 px-4 bg-slate-900 text-white">
@@ -25,7 +24,6 @@ export default function Footer() {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-8">
-            {/* Contact Dialog */}
             <Dialog>
               <DialogTrigger asChild>
                 <Button
@@ -46,7 +44,6 @@ export default function Footer() {
               </DialogContent>
             </Dialog>
 
-            {/* GitHub Button */}
             <Button
               variant="outline"
               size="lg"
@@ -57,7 +54,6 @@ export default function Footer() {
               GitHub
             </Button>
 
-            {/* LinkedIn Button */}
             <Button
               variant="outline"
               size="lg"

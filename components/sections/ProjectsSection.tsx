@@ -162,7 +162,12 @@ export default function ProjectsSection() {
               <Button
                 key={filter}
                 size="sm"
-                variant={selectedCategory === filter ? "default" : "outline"}
+                variant="outline"
+                className={
+                  selectedCategory === filter
+                    ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
+                    : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
+                }
                 onClick={() => setSelectedCategory(filter)}
               >
                 <Filter className="w-3 h-3 mr-1" />
@@ -175,7 +180,12 @@ export default function ProjectsSection() {
               <Button
                 key={filter}
                 size="sm"
-                variant={selectedTechFilters.includes(filter) ? "default" : "outline"}
+                variant="outline"
+                className={
+                  selectedTechFilters.includes(filter)
+                    ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
+                    : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
+                }
                 onClick={() => toggleTechFilter(filter)}
               >
                 <Filter className="w-3 h-3 mr-1" />

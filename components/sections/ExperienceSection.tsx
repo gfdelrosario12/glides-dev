@@ -211,7 +211,12 @@ export default function ExperienceSection() {
             <div className="flex flex-wrap gap-2 justify-center mb-6">
               <Button
                 size="sm"
-                variant={selectedSkills.length === 0 ? "default" : "outline"}
+                variant="outline"
+                className={
+                  selectedSkills.length === 0
+                    ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
+                    : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
+                }
                 onClick={() => setSelectedSkills([])}
               >
                 <Filter className="w-3 h-3 mr-1" />
@@ -222,7 +227,12 @@ export default function ExperienceSection() {
                 <Button
                   key={skill}
                   size="sm"
-                  variant={selectedSkills.includes(skill) ? "default" : "outline"}
+                  variant="outline"
+                  className={
+                    selectedSkills.includes(skill)
+                      ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
+                      : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
+                  }
                   onClick={() => toggleSkill(skill)}
                 >
                   <Filter className="w-3 h-3 mr-1" />
@@ -232,7 +242,6 @@ export default function ExperienceSection() {
             </div>
             {renderCards(filteredByTab("organizational"))}
           </TabsContent>
-
 
           <TabsContent value="competetive">
             {renderCards(filteredByTab("competetive"))}
