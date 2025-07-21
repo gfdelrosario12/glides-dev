@@ -26,7 +26,7 @@ export default function CertificationsSection() {
 
   useEffect(() => {
     const csvUrl =
-      "https://glides-dev.s3.ap-southeast-1.amazonaws.com/data/data+for+portfolio/certifications+-+Sheet1.csv";
+      "https://glides-dev.s3.ap-southeast-1.amazonaws.com/data/certifications+-+Sheet1.csv";
 
     fetch(csvUrl)
       .then((res) => {
@@ -37,7 +37,7 @@ export default function CertificationsSection() {
         Papa.parse<Certification>(text, {
           header: true,
           skipEmptyLines: true,
-          transformHeader: (header) => header.trim(), // ✅ trim keys like "  year"
+          transformHeader: (header) => header.trim(),
           complete: (result) => {
             const filtered = result.data
               .map((item) => ({
@@ -45,7 +45,7 @@ export default function CertificationsSection() {
                 organization: item.organization?.trim() || "",
                 year: item.year?.trim() || "",
                 description: item.description?.trim() || "",
-                color: item.color?.trim() || "blue", // default fallback
+                color: item.color?.trim() || "blue",
                 url: item.url?.trim() || "#",
               }))
               .filter(

@@ -94,17 +94,14 @@ export default function EducationSection() {
               <CardContent>
                 <div className="flex items-center gap-2 text-slate-600 mb-3 dark:text-slate-300">
                   <MapPin className="w-4 h-4" />
-                  <span>Berkeley, CA</span>
+                  <span>Sta. Cruz, Manila</span>
                 </div>
                 <p className="text-slate-600 mb-4 dark:text-slate-300">
                   Graduated with high honors, led a research study on the use of Discord as an alternative online synchronous learning platform for educational institutions.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline" className="dark:text-slate-300 dark:border-slate-500">
-                    Software Engineering
-                  </Badge>
-                  <Badge variant="outline" className="dark:text-slate-300 dark:border-slate-500">
-                    Data Structures
+                    Science and Technology
                   </Badge>
                   <Badge variant="outline" className="dark:text-slate-300 dark:border-slate-500">
                     Web Development

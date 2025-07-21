@@ -50,7 +50,7 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
               </span>
             </h1>
             <h2 className="text-2xl lg:text-3xl text-slate-600 mb-6 font-light dark:text-slate-300">
-              Software Developer and Certified Cloud Engineer
+              Fullstack Software Developer and Certified Associate Cloud Engineer
             </h2>
             <p className="text-lg text-slate-600 mb-8 max-w-2xl leading-relaxed dark:text-slate-300">
               A passionate third-year Computer Engineering Technology student specializing in Computer Networks Engineering at the Polytechnic University of the Philippines and a Google Cloud Certified Associate Cloud Engineer. Actively building expertise in cloud computing while also developing full-stack applications using React and Spring Boot.

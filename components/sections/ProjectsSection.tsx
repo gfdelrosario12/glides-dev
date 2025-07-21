@@ -5,7 +5,7 @@ import Papa from "papaparse";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Code, ExternalLink, Github } from "lucide-react";
+import { Code, ExternalLink, Github, Filter } from "lucide-react";
 
 type Project = {
   title: string;
@@ -16,12 +16,34 @@ type Project = {
   githubUrl?: string;
 };
 
+const CATEGORY_FILTERS = ["Show All", "Academic", "Freelance", "Personal"];
+const TECH_FILTERS = [
+  "IoT",
+  "Raspberry Pi",
+  "Python",
+  "Next.js",
+  "Java",
+  "Spring",
+  "Spring Boot",
+  "PostgreSQL",
+  "OpenAI - Whisper",
+  "AWS",
+  "MySQL",
+  "React.js",
+  "Redux",
+  "Version Control Systems",
+  "Arduino",
+  "C++",
+];
+
 export default function ProjectsSection() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Show All");
+  const [selectedTechFilters, setSelectedTechFilters] = useState<string[]>(["Show All"]);
 
   useEffect(() => {
     const csvUrl =
-      "https://glides-dev.s3.ap-southeast-1.amazonaws.com/data/data+for+portfolio/projects+-+Sheet1.csv";
+      "https://glides-dev.s3.ap-southeast-1.amazonaws.com/data/projects+-+Sheet1.csv";
 
     fetch(csvUrl)
       .then((response) => {
@@ -46,6 +68,37 @@ export default function ProjectsSection() {
       })
       .catch((err) => console.error("Error loading projects:", err));
   }, []);
+
+  const toggleTechFilter = (filter: string) => {
+    if (filter === "Show All") {
+      setSelectedTechFilters(["Show All"]);
+    } else {
+      let updated = selectedTechFilters.includes(filter)
+        ? selectedTechFilters.filter((f) => f !== filter)
+        : [...selectedTechFilters.filter((f) => f !== "Show All"), filter];
+
+      if (updated.length === 0) {
+        updated = ["Show All"];
+      }
+
+      setSelectedTechFilters(updated);
+    }
+  };
+
+  const filteredProjects = projects.filter((project) => {
+    const matchesCategory =
+      selectedCategory === "Show All" || project.category === selectedCategory;
+
+    const techs = (project.techStack ?? "")
+      .split("|")
+      .map((t) => t.trim());
+
+    const matchesTech =
+      selectedTechFilters.includes("Show All") ||
+      selectedTechFilters.some((f) => techs.includes(f));
+
+    return matchesCategory && matchesTech;
+  });
 
   const getBadgeClass = (category: string) => {
     switch (category) {
@@ -89,12 +142,12 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="py-16 px-4 bg-white/50 dark:bg-slate-900/50">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <Code className="w-4 h-4" />
             Featured Work
           </div>
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             Projects
           </h2>
           <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
@@ -102,8 +155,38 @@ export default function ProjectsSection() {
           </p>
         </div>
 
+        {/* Filter controls */}
+        <div className="mb-8">
+          <div className="flex flex-wrap gap-2 mb-4 justify-center">
+            {CATEGORY_FILTERS.map((filter) => (
+              <Button
+                key={filter}
+                size="sm"
+                variant={selectedCategory === filter ? "default" : "outline"}
+                onClick={() => setSelectedCategory(filter)}
+              >
+                <Filter className="w-3 h-3 mr-1" />
+                {filter}
+              </Button>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-2 justify-center">
+            {["Show All", ...TECH_FILTERS].map((filter) => (
+              <Button
+                key={filter}
+                size="sm"
+                variant={selectedTechFilters.includes(filter) ? "default" : "outline"}
+                onClick={() => toggleTechFilter(filter)}
+              >
+                <Filter className="w-3 h-3 mr-1" />
+                {filter}
+              </Button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <Card
               key={index}
               className="hover:shadow-xl transition-all duration-300 hover:scale-[1.05] group dark:bg-slate-800 dark:border-slate-700"
