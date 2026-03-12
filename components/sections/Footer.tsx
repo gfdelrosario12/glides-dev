@@ -16,11 +16,11 @@ export default function Footer() {
       <div className="container mx-auto max-w-6xl">
         <div className="text-center">
           <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
-            Trained by trials, driven by passion. <br />Let's Build Something Amazing Together.
+            Trained by trials, driven by passion. <br />Let&apos;s Build Something Amazing Together.
           </h3>
           <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-            I'm always excited to work on innovative projects and collaborate with talented teams. Feel free to reach
-            out if you'd like to discuss opportunities or just chat about tech!
+            I&apos;m always excited to work on innovative projects and collaborate with talented teams. Feel free to reach
+            out if you&apos;d like to discuss opportunities or just chat about tech!
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-8">

@@ -2,7 +2,7 @@
  * Styling utilities and constants for badges and colors
  */
 
-import { BadgeColor, ProjectCategory } from './types';
+import { BadgeColor } from './types';
 
 /**
  * Get badge styling for project categories

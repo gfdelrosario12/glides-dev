@@ -12,7 +12,6 @@ import { motion } from "framer-motion"
 import MotionWrapper from "@/components/sections/MotionWrapper"
 
 export default function AnimatedSection() {
-  const [activeSection, setActiveSection] = useState("home")
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export default function AnimatedSection() {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
-      setActiveSection(sectionId)
     }
   }
 

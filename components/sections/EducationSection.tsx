@@ -8,6 +8,7 @@ import {
   CardContent,
 } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import Image from "next/image"
 import { GraduationCap, MapPin } from "lucide-react"
 
 export default function EducationSection() {
@@ -115,10 +116,14 @@ export default function EducationSection() {
           <div className="flex justify-center">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-2xl blur-2xl opacity-20 scale-110"></div>
-              <img
+              <Image
                 src="/images/Grad.JPG"
                 alt="Graduation photo"
-                className="rounded-2xl shadow-2xl relative w-80 h-96 object-cover border-4 border-white"
+                className="rounded-2xl shadow-2xl relative border-4 border-white"
+                width={320}
+                height={384}
+                style={{ objectFit: 'cover' }}
+                priority
               />
             </div>
           </div>

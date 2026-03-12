@@ -6,7 +6,7 @@
 import Papa from 'papaparse';
 
 // Cache to prevent redundant fetches
-const cache = new Map<string, any[]>();
+const cache = new Map<string, unknown[]>();
 
 /**
  * Generic CSV loader with type safety and caching
@@ -18,7 +18,7 @@ export async function loadCSV<T>(
   url: string,
   options: {
     skipCache?: boolean;
-    transform?: (item: any) => T;
+    transform?: (item: Record<string, unknown>) => T;
     validate?: (item: T) => boolean;
   } = {}
 ): Promise<T[]> {
@@ -26,7 +26,7 @@ export async function loadCSV<T>(
 
   // Return cached data if available
   if (!skipCache && cache.has(url)) {
-    return cache.get(url)!;
+    return cache.get(url) as T[];
   }
 
   try {
@@ -41,22 +41,22 @@ export async function loadCSV<T>(
     const text = await response.text();
 
     return new Promise((resolve, reject) => {
-      Papa.parse<any>(text, {
+      Papa.parse<Record<string, unknown>>(text, {
         header: true,
         skipEmptyLines: true,
         transformHeader: (header) => header.trim(),
         complete: (results) => {
           try {
-            let data = results.data;
+            let data: unknown[] = results.data;
 
             // Apply transformation if provided
             if (transform) {
-              data = data.map(transform);
+              data = data.map((item) => transform(item as Record<string, unknown>));
             }
 
             // Apply validation if provided
             if (validate) {
-              data = data.filter(validate);
+              data = data.filter((item) => validate(item as T));
             }
 
             // Cache the result

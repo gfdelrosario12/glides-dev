@@ -93,7 +93,9 @@ export function getMemoryUsage(): {
     return null;
   }
 
-  const memory = (performance as any).memory;
+  const memory = (performance as { memory?: { usedJSHeapSize: number; totalJSHeapSize: number; jsHeapSizeLimit: number } }).memory;
+  if (!memory) return null;
+  
   return {
     usedJSHeapSize: Math.round(memory.usedJSHeapSize / 1048576), // MB
     totalJSHeapSize: Math.round(memory.totalJSHeapSize / 1048576), // MB
@@ -104,7 +106,7 @@ export function getMemoryUsage(): {
 /**
  * Debounce function for performance optimization
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -124,7 +126,7 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * Throttle function for performance optimization
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => unknown>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
