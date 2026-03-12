@@ -25,20 +25,19 @@ export default function CertificationsSection() {
   const [certifications, setCertifications] = useState<Certification[]>([]);
 
   useEffect(() => {
-    const csvUrl =
-      "https://glides-dev.s3.ap-southeast-1.amazonaws.com/data/certifications+-+Sheet1.csv";
-
-    fetch(csvUrl)
+    fetch("/data/certifications.csv")
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch CSV from S3");
+        if (!res.ok) throw new Error("Failed to fetch certifications CSV");
         return res.text();
       })
       .then((text) => {
+        console.log("Certifications CSV loaded, length:", text.length);
         Papa.parse<Certification>(text, {
           header: true,
           skipEmptyLines: true,
           transformHeader: (header) => header.trim(),
           complete: (result) => {
+            console.log("Parsed certifications:", result.data);
             const filtered = result.data
               .map((item) => ({
                 title: item.title?.trim() || "",
@@ -57,6 +56,7 @@ export default function CertificationsSection() {
                   item.color &&
                   item.url
               );
+            console.log("Filtered certifications:", filtered);
             setCertifications(filtered);
           },
         });

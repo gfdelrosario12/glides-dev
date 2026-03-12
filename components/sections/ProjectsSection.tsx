@@ -18,22 +18,40 @@ type Project = {
 
 const CATEGORY_FILTERS = ["Show All", "Academic", "Freelance", "Personal"];
 const TECH_FILTERS = [
-  "IoT",
-  "Raspberry Pi",
   "Python",
-  "Next.js",
   "Java",
-  "Spring",
+  "TypeScript",
+  "Next.js",
+  "React.js",
   "Spring Boot",
   "PostgreSQL",
-  "OpenAI - Whisper",
   "AWS",
-  "MySQL",
-  "React.js",
-  "Redux",
-  "Version Control Systems",
+  "AWS RDS",
+  "AWS S3",
+  "AWS EC2",
+  "IoT",
+  "LangChain",
+  "Amazon Bedrock",
+  "Three.js",
+  "Docker",
+  "REST API",
+  "WebSocket",
+  "Redis",
+  "JWT",
+  "OAuth2",
+  "MQTT",
+  "Raspberry Pi",
   "Arduino",
   "C++",
+  "MySQL",
+  "DigitalOcean",
+  "Tailwind CSS",
+  "Framer Motion",
+  "Redux",
+  "Spring Security",
+  "Nginx",
+  "CI/CD",
+  "Git Hooks",
 ];
 
 export default function ProjectsSection() {
@@ -42,28 +60,37 @@ export default function ProjectsSection() {
   const [selectedTechFilters, setSelectedTechFilters] = useState<string[]>(["Show All"]);
 
   useEffect(() => {
-    const csvUrl =
-      "https://glides-dev.s3.ap-southeast-1.amazonaws.com/data/projects+-+Sheet1.csv";
-
-    fetch(csvUrl)
+    fetch("/data/projects.csv")
       .then((response) => {
-        if (!response.ok) throw new Error("Failed to load CSV from S3");
+        if (!response.ok) {
+          console.error("Failed to load projects CSV:", response.status);
+          throw new Error("Failed to load projects CSV");
+        }
         return response.text();
       })
       .then((text) => {
+        console.log("Projects CSV loaded, length:", text.length);
         Papa.parse<Project>(text, {
           header: true,
           skipEmptyLines: true,
+          transformHeader: (header) => header.trim(),
           complete: (results) => {
+            console.log("Parsed projects count:", results.data.length);
+            console.log("First project:", results.data[0]);
+            
             const validProjects = results.data.filter(
               (project) =>
                 project.title &&
                 project.description &&
-                project.category &&
-                typeof project.techStack === "string"
+                project.category
             );
+            
+            console.log("Valid projects count:", validProjects.length);
             setProjects(validProjects);
           },
+          error: (error: Error) => {
+            console.error("Papa parse error:", error);
+          }
         });
       })
       .catch((err) => console.error("Error loading projects:", err));
@@ -117,23 +144,77 @@ export default function ProjectsSection() {
 
   const getTechColor = (tech: string) => {
     const colorMap: Record<string, string> = {
+      "Python": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
+      "LangChain": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      "Amazon Bedrock": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+      "LLM Agents": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "CLI Tools": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
       "IoT": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
       "Raspberry Pi": "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
-      "Python": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
       "Next.js": "bg-black text-white dark:bg-white dark:text-black",
+      "TypeScript": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "Three.js": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "Tailwind CSS": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
+      "Framer Motion": "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
       "React": "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
       "React.js": "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
+      "React Three Fiber": "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
       "Redux": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
       "Java": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
       "Spring": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
       "Spring Boot": "bg-green-200 text-green-800 dark:bg-green-900/40 dark:text-green-200",
+      "Spring Security": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
       "PostgreSQL": "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
       "MySQL": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
       "AWS": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+      "AWS RDS": "bg-amber-200 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
+      "AWS S3": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+      "AWS EC2": "bg-amber-200 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
+      "AWS Lambda": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+      "AWS IoT Core": "bg-orange-200 text-orange-800 dark:bg-orange-900/40 dark:text-orange-200",
+      "AWS CloudFront": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+      "OpenAI Whisper": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
       "OpenAI - Whisper": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
       "Arduino": "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
       "C++": "bg-blue-200 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+      "Docker": "bg-sky-200 text-sky-800 dark:bg-sky-900/30 dark:text-sky-300",
+      "DigitalOcean": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "REST API": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      "WebSocket": "bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-300",
+      "MQTT": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "Redis": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+      "JWT": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
+      "OAuth2": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
+      "Nginx": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      "Vercel": "bg-black text-white dark:bg-white dark:text-black",
+      "Git": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+      "Git Hooks": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+      "CI/CD": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "GitHub Pages": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
       "Version Control Systems": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+      "pytest": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
+      "Flask": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
+      "DynamoDB": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+      "Data Analytics": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
+      "TensorFlow": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+      "Performance Optimization": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
+      "PWA": "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
+      "JasperReports": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+      "Apache POI": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      "JavaScript": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
+      "HTML5": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+      "CSS3": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "Chart.js": "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
+      "Material-UI": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "Local Storage": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+      "Stripe API": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "SendGrid": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "Responsive Design": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      "Bluetooth": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "Serial Communication": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+      "Pulse Sensor": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+      "LCD Display": "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
+      "Data Logging": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
     };
 
     return colorMap[tech.trim()] || "bg-gray-100 text-gray-700 dark:bg-gray-800/30 dark:text-gray-300";

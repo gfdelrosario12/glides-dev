@@ -116,7 +116,7 @@ export default function EducationSection() {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-2xl blur-2xl opacity-20 scale-110"></div>
               <img
-                src="https://glides-dev.s3.ap-southeast-1.amazonaws.com/pfps/41_DEL_ROSARIO__GLADILE_PUP00822.JPG"
+                src="/images/Grad.JPG"
                 alt="Graduation photo"
                 className="rounded-2xl shadow-2xl relative w-80 h-96 object-cover border-4 border-white"
               />

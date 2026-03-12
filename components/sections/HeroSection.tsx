@@ -50,10 +50,10 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
               </span>
             </h1>
             <h2 className="text-2xl lg:text-3xl text-slate-600 mb-6 font-light dark:text-slate-300">
-              Fullstack Software Developer and Certified Associate Cloud Engineer
+              Full-Stack Developer & Cloud Infrastructure Engineer
             </h2>
             <p className="text-lg text-slate-600 mb-8 max-w-2xl leading-relaxed dark:text-slate-300">
-              A passionate third-year Computer Engineering Technology student specializing in Computer Networks Engineering at the Polytechnic University of the Philippines and a Google Cloud Certified Associate Cloud Engineer. Actively building expertise in cloud computing while also developing full-stack applications using React and Spring Boot.
+              Technology professional focused on building scalable, reliable systems across full-stack development and cloud infrastructure. Experienced in developing modern web applications using React and Spring Boot, with hands-on exposure to AWS, Azure, and Google Cloud. Strong foundation in backend engineering, distributed systems, and cloud-native architecture, with practical experience in deploying applications, managing infrastructure, and designing end-to-end solutions. Driven by curiosity and impact to contribute to teams that value scalability, performance, and continuous improvement.
             </p>
 
             <TooltipProvider>
@@ -137,7 +137,7 @@ export default function HeroSection({ scrollToSection }: HeroSectionProps) {
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full blur-2xl opacity-20 scale-110"></div>
               <Avatar className="w-80 h-80 border-4 border-white shadow-2xl relative">
                 <AvatarImage
-                  src="https://glides-dev.s3.ap-southeast-1.amazonaws.com/pfps/_DSF8338.JPG"
+                  src="/images/Main.JPG"
                   alt="Gladwin Ferdz Del Rosario"
                   className="w-full h-full object-cover"
                 />

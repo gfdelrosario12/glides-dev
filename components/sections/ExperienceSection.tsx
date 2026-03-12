@@ -38,20 +38,21 @@ export default function ExperienceSection() {
   useEffect(() => {
     const loadCSV = async () => {
       try {
-        const response = await fetch(
-          "https://glides-dev.s3.ap-southeast-1.amazonaws.com/data/experiences+-+Sheet1.csv"
-        );
+        const response = await fetch("/data/experiences.csv");
 
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
         }
 
         const text = await response.text();
+        console.log("Experiences CSV loaded, length:", text.length);
 
         Papa.parse<Entry>(text, {
           header: true,
           skipEmptyLines: true,
+          transformHeader: (header) => header.trim(),
           complete: (result) => {
+            console.log("Parsed experiences:", result.data);
             const cleaned = result.data.map((entry) => ({
               type: entry.type?.trim().toLowerCase(),
               title: entry.title?.trim(),
@@ -63,13 +64,13 @@ export default function ExperienceSection() {
               description: entry.description?.trim(),
               skills: entry.skills?.trim(),
             }));
-            setData(
-              cleaned.sort((a, b) => {
-                const aDate = extractDate(a.duration);
-                const bDate = extractDate(b.duration);
-                return bDate.getTime() - aDate.getTime();
-              })
-            );
+            const sorted = cleaned.sort((a, b) => {
+              const aDate = extractDate(a.duration);
+              const bDate = extractDate(b.duration);
+              return bDate.getTime() - aDate.getTime();
+            });
+            console.log("Sorted experiences:", sorted);
+            setData(sorted);
           },
         });
       } catch (error) {
@@ -138,10 +139,7 @@ export default function ExperienceSection() {
               <div className="flex items-center gap-2 mb-2 flex-wrap text-xs text-muted-foreground">
                 {item.badgeLabel && (
                   <Badge
-                    style={{
-                      backgroundColor: item.badgeColor || "#ccc",
-                      color: "#fff",
-                    }}
+                    className={getBadgeColor(item.badgeColor)}
                   >
                     {item.badgeLabel}
                   </Badge>
@@ -258,6 +256,19 @@ const extractDate = (duration: string): Date => {
     return new Date(parseInt(match[match.length - 1]), 0);
   }
   return new Date(0);
+};
+
+const getBadgeColor = (color: string) => {
+  const colorMap: Record<string, string> = {
+    blue: "bg-blue-500 text-white dark:bg-blue-600",
+    red: "bg-red-500 text-white dark:bg-red-600",
+    green: "bg-green-500 text-white dark:bg-green-600",
+    purple: "bg-purple-500 text-white dark:bg-purple-600",
+    gold: "bg-gradient-to-r from-yellow-400 to-yellow-600 text-white font-bold",
+    silver: "bg-gradient-to-r from-gray-300 to-gray-500 text-white font-bold",
+    bronze: "bg-gradient-to-r from-orange-400 to-orange-600 text-white font-bold",
+  };
+  return colorMap[color] || "bg-gray-500 text-white";
 };
 
 const getTechColor = (tech: string) => {
