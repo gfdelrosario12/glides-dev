@@ -30,41 +30,41 @@ export default function AnimatedSection() {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-slate-900">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="rounded-3xl bg-blue-600 p-8 shadow-lg border border-blue-700 text-center max-w-md"
+          className="rounded-3xl bg-blue-600 p-6 sm:p-8 shadow-lg border border-blue-700 text-center max-w-xs sm:max-w-md mx-4"
         >
           <motion.h2
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-2xl font-semibold text-white mb-6"
+            className="text-xl sm:text-2xl font-semibold text-white mb-4 sm:mb-6"
           >
             Compiling the story...
           </motion.h2>
 
           {/* Pac-Man Loader */}
-          <div className="flex items-center justify-center space-x-3 mt-4">
+          <div className="flex items-center justify-center space-x-2 sm:space-x-3 mt-4">
             <motion.div
               initial={{ x: 0 }}
-              animate={{ x: [0, 100] }}
+              animate={{ x: [0, 80, 0] }}
               transition={{
-                duration: 1.5,
+                duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
               className="relative"
             >
-              <div className="w-8 h-8 bg-yellow-400 clip-pacman"></div>
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-yellow-400 clip-pacman"></div>
             </motion.div>
 
             {[0, 1, 2, 3].map((_, i) => (
               <motion.div
                 key={i}
-                className="w-3 h-3 bg-white rounded-full"
+                className="w-2 h-2 sm:w-3 sm:h-3 bg-white rounded-full"
                 initial={{ opacity: 1 }}
                 animate={{ opacity: [1, 0.2, 1] }}
                 transition={{
@@ -76,7 +76,7 @@ export default function AnimatedSection() {
             ))}
           </div>
 
-          <p className="mt-6 text-sm text-white">
+          <p className="mt-4 sm:mt-6 text-xs sm:text-sm text-white">
             Building the code...
           </p>
         </motion.div>
