@@ -31,6 +31,47 @@ export default function EducationSection() {
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
           {/* Education Cards */}
           <div className="space-y-6 sm:space-y-8">
+                        <Card className="hover:shadow-lg transition-shadow duration-300 border-l-4 border-l-blue-500 dark:bg-slate-800 dark:border-slate-700">
+              <CardHeader>
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-0">
+                  <div className="flex-1">
+                    <CardTitle className="text-lg sm:text-xl mb-2 dark:text-slate-200">
+                      Bachelor of Science in Computer Engineering
+                    </CardTitle>
+                    <CardDescription className="text-sm sm:text-base font-medium text-blue-600 dark:text-blue-400">
+                      Polytechnic University of the Philippines - College of Engineering
+                    </CardDescription>
+                  </div>
+                  <Badge
+                    variant="secondary"
+                    className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 w-fit"
+                  >
+                    2025 - 2027
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600 mb-3 dark:text-slate-300">
+                  <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                  <span>Sta. Mesa, Manila City</span>
+                </div>
+                <p className="text-sm sm:text-base text-slate-600 mb-4 dark:text-slate-300">
+                  Specialized in Computer Networks Engineering, led and developed a thesis project on distributed IoT monitoring solutions for healthcare environments, integrating networked sensors, data visualization dashboards, and AI-driven analysis.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline" className="text-xs sm:text-sm dark:text-slate-300 dark:border-slate-500">
+                    Computer Networks
+                  </Badge>
+                  <Badge variant="outline" className="text-xs sm:text-sm dark:text-slate-300 dark:border-slate-500">
+                    Software Engineering
+                  </Badge>
+                  <Badge variant="outline" className="text-xs sm:text-sm dark:text-slate-300 dark:border-slate-500">
+                    Cloud Computing
+                  </Badge>
+                </div>
+              </CardContent>
+
+            </Card>
             <Card className="hover:shadow-lg transition-shadow duration-300 border-l-4 border-l-blue-500 dark:bg-slate-800 dark:border-slate-700">
               <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-0">
