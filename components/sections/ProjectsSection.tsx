@@ -5,7 +5,7 @@ import Papa from "papaparse";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Code, ExternalLink, Github, Filter } from "lucide-react";
+import { Code, ExternalLink, Github } from "lucide-react";
 
 type Project = {
   title: string;
@@ -36,9 +36,8 @@ const TECH_FILTERS = [
   "Docker",
   "REST API",
   "WebSocket",
-  "Redis",
   "JWT",
-  "OAuth2",
+  "JWT Authentication",
   "MQTT",
   "Raspberry Pi",
   "Arduino",
@@ -48,10 +47,14 @@ const TECH_FILTERS = [
   "Tailwind CSS",
   "Framer Motion",
   "Redux",
-  "Spring Security",
   "Nginx",
   "CI/CD",
-  "Git Hooks",
+  "Vite.js",
+  "OpenAI Whisper",
+  "CLI Tools",
+  "LLM Agents",
+  "Git",
+  "GitHub",
 ];
 
 export default function ProjectsSection() {
@@ -144,77 +147,46 @@ export default function ProjectsSection() {
 
   const getTechColor = (tech: string) => {
     const colorMap: Record<string, string> = {
-      "Python": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
-      "LangChain": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-      "Amazon Bedrock": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-      "LLM Agents": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-      "CLI Tools": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
       "IoT": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
       "Raspberry Pi": "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
+      "Python": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
       "Next.js": "bg-black text-white dark:bg-white dark:text-black",
-      "TypeScript": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-      "Three.js": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-      "Tailwind CSS": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
-      "Framer Motion": "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
       "React": "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
       "React.js": "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300",
-      "React Three Fiber": "bg-violet-100 text-violet-700 dark:bg-violet-900/30 dark:text-violet-300",
       "Redux": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
       "Java": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
       "Spring": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
       "Spring Boot": "bg-green-200 text-green-800 dark:bg-green-900/40 dark:text-green-200",
-      "Spring Security": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
       "PostgreSQL": "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
       "MySQL": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
       "AWS": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-      "AWS RDS": "bg-amber-200 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
       "AWS S3": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-      "AWS EC2": "bg-amber-200 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200",
-      "AWS Lambda": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-      "AWS IoT Core": "bg-orange-200 text-orange-800 dark:bg-orange-900/40 dark:text-orange-200",
-      "AWS CloudFront": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+      "AWS EC2": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+      "AWS RDS": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
       "OpenAI Whisper": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
-      "OpenAI - Whisper": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
       "Arduino": "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
       "C++": "bg-blue-200 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
-      "Docker": "bg-sky-200 text-sky-800 dark:bg-sky-900/30 dark:text-sky-300",
-      "DigitalOcean": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-      "REST API": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-      "WebSocket": "bg-lime-100 text-lime-700 dark:bg-lime-900/30 dark:text-lime-300",
-      "MQTT": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-      "Redis": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
-      "JWT": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
-      "OAuth2": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
-      "Nginx": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-      "Vercel": "bg-black text-white dark:bg-white dark:text-black",
-      "Git": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-      "Git Hooks": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-      "CI/CD": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-      "GitHub Pages": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
       "Version Control Systems": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
-      "pytest": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
-      "Flask": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
-      "DynamoDB": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
-      "Data Analytics": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
-      "TensorFlow": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-      "Performance Optimization": "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300",
-      "PWA": "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
-      "JasperReports": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
-      "Apache POI": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-      "JavaScript": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300",
-      "HTML5": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
-      "CSS3": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-      "Chart.js": "bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300",
-      "Material-UI": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-      "Local Storage": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
-      "Stripe API": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-      "SendGrid": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-      "Responsive Design": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
-      "Bluetooth": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
-      "Serial Communication": "bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
-      "Pulse Sensor": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
-      "LCD Display": "bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300",
-      "Data Logging": "bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-300",
+      "Docker": "bg-blue-600 text-white dark:bg-blue-700 dark:text-white",
+      "REST API": "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
+      "JWT": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "JWT Authentication": "bg-purple-200 text-purple-800 dark:bg-purple-900/40 dark:text-purple-200",
+      "WebSocket": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300",
+      "DigitalOcean": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "Vite.js": "bg-yellow-200 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
+      "TypeScript": "bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300",
+      "Three.js": "bg-black text-white dark:bg-gray-800 dark:text-white",
+      "Tailwind CSS": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
+      "Framer Motion": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300",
+      "Nginx": "bg-green-200 text-green-800 dark:bg-green-900/40 dark:text-green-200",
+      "CI/CD": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "LangChain": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+      "Amazon Bedrock": "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
+      "LLM Agents": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
+      "CLI Tools": "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
+      "MQTT": "bg-cyan-100 text-cyan-700 dark:bg-cyan-900/30 dark:text-cyan-300",
+      "Git": "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300",
+      "GitHub": "bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300",
     };
 
     return colorMap[tech.trim()] || "bg-gray-100 text-gray-700 dark:bg-gray-800/30 dark:text-gray-300";
@@ -237,99 +209,116 @@ export default function ProjectsSection() {
         </div>
 
         {/* Filter controls */}
-        <div className="mb-8">
-          <div className="flex flex-wrap gap-2 mb-4 justify-center">
-            {CATEGORY_FILTERS.map((filter) => (
-              <Button
-                key={filter}
-                size="sm"
-                variant="outline"
-                className={
-                  selectedCategory === filter
-                    ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
-                    : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
-                }
-                onClick={() => setSelectedCategory(filter)}
-              >
-                <Filter className="w-3 h-3 mr-1" />
-                {filter}
-              </Button>
-            ))}
+        <div className="mb-8 space-y-4">
+          <div>
+            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">
+              Category
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {CATEGORY_FILTERS.map((filter) => (
+                <Button
+                  key={filter}
+                  size="sm"
+                  variant="outline"
+                  className={`transition-all ${
+                    selectedCategory === filter
+                      ? "bg-blue-600 text-white hover:bg-blue-700 border-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600 dark:border-blue-500"
+                      : "hover:bg-blue-50 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700"
+                  }`}
+                  onClick={() => setSelectedCategory(filter)}
+                >
+                  {filter}
+                </Button>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {["Show All", ...TECH_FILTERS].map((filter) => (
-              <Button
-                key={filter}
-                size="sm"
-                variant="outline"
-                className={
-                  selectedTechFilters.includes(filter)
-                    ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
-                    : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
-                }
-                onClick={() => toggleTechFilter(filter)}
-              >
-                <Filter className="w-3 h-3 mr-1" />
-                {filter}
-              </Button>
-            ))}
+
+          <div>
+            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">
+              Technologies
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {["Show All", ...TECH_FILTERS].map((filter) => (
+                <Button
+                  key={filter}
+                  size="sm"
+                  variant="outline"
+                  className={`transition-all ${
+                    selectedTechFilters.includes(filter)
+                      ? "bg-blue-600 text-white hover:bg-blue-700 border-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600 dark:border-blue-500"
+                      : "hover:bg-blue-50 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700"
+                  }`}
+                  onClick={() => toggleTechFilter(filter)}
+                >
+                  {filter}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
-            <Card
-              key={index}
-              className="hover:shadow-xl transition-all duration-300 hover:scale-[1.05] group dark:bg-slate-800 dark:border-slate-700"
-            >
-              <CardHeader>
-                <div className="flex items-start justify-between mb-2">
-                  <Badge className={getBadgeClass(project.category)}>
-                    {project.category}
-                  </Badge>
-                  <div className="flex gap-2">
-                    {project.liveUrl && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="p-2"
-                        onClick={() => window.open(project.liveUrl, "_blank")}
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </Button>
-                    )}
-                    {project.githubUrl && (
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="p-2"
-                        onClick={() => window.open(project.githubUrl, "_blank")}
-                      >
-                        <Github className="w-4 h-4" />
-                      </Button>
-                    )}
+          {filteredProjects.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <p className="text-slate-600 dark:text-slate-300">
+                No projects match your selected filters. Try adjusting your selections.
+              </p>
+            </div>
+          ) : (
+            filteredProjects.map((project, index) => (
+              <Card
+                key={index}
+                className="hover:shadow-xl transition-all duration-300 hover:scale-[1.05] group dark:bg-slate-800 dark:border-slate-700"
+              >
+                <CardHeader>
+                  <div className="flex items-start justify-between mb-2">
+                    <Badge className={getBadgeClass(project.category)}>
+                      {project.category}
+                    </Badge>
+                    <div className="flex gap-2">
+                      {project.liveUrl && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="p-2"
+                          onClick={() => window.open(project.liveUrl, "_blank")}
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </Button>
+                      )}
+                      {project.githubUrl && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="p-2"
+                          onClick={() => window.open(project.githubUrl, "_blank")}
+                        >
+                          <Github className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <CardTitle className="text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  {project.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-slate-600 dark:text-slate-300 mb-4">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {(project.techStack ?? "")
-                    .split("|")
-                    .map((tech, i) => (
-                      <Badge key={i} className={getTechColor(tech)}>
-                        {tech.trim()}
-                      </Badge>
-                    ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <CardTitle className="text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {project.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-slate-600 dark:text-slate-300 mb-4">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {(project.techStack ?? "")
+                      .split("|")
+                      .map((tech, i) => (
+                        <Badge key={i} className={getTechColor(tech)}>
+                          {tech.trim()}
+                        </Badge>
+                      ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </section>

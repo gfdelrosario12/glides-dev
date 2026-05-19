@@ -189,12 +189,12 @@ export default function ExperienceSection() {
         </div>
 
         <Tabs defaultValue="professional" className="w-full">
-          <TabsList className="mx-auto flex gap-4 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-1 mb-6 w-fit">
+          <TabsList className="mx-auto flex gap-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg p-2 mb-8 w-fit shadow-sm">
             {"Professional,Organizational,Competetive".split(",").map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab.toLowerCase()}
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white dark:data-[state=active]:bg-blue-500 dark:data-[state=active]:text-white px-4 py-2 rounded-md transition-all"
+                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white dark:data-[state=active]:bg-blue-500 data-[state=active]:shadow-md px-4 py-2 rounded-md transition-all duration-200"
               >
                 {tab}
               </TabsTrigger>
@@ -206,37 +206,42 @@ export default function ExperienceSection() {
           </TabsContent>
 
           <TabsContent value="organizational">
-            <div className="flex flex-wrap gap-2 justify-center mb-6">
-              <Button
-                size="sm"
-                variant="outline"
-                className={
-                  selectedSkills.length === 0
-                    ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
-                    : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
-                }
-                onClick={() => setSelectedSkills([])}
-              >
-                <Filter className="w-3 h-3 mr-1" />
-                Show All
-              </Button>
+            <div className="space-y-4 mb-6">
+              <div>
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">
+                  Filter by Skills
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className={`transition-all ${
+                      selectedSkills.length === 0
+                        ? "bg-blue-600 text-white hover:bg-blue-700 border-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600 dark:border-blue-500"
+                        : "hover:bg-blue-50 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700"
+                    }`}
+                    onClick={() => setSelectedSkills([])}
+                  >
+                    Show All
+                  </Button>
 
-              {allSkills.map((skill) => (
-                <Button
-                  key={skill}
-                  size="sm"
-                  variant="outline"
-                  className={
-                    selectedSkills.includes(skill)
-                      ? "bg-blue-600 text-white hover:bg-blue-700 border-transparent dark:bg-blue-500 dark:hover:bg-blue-600"
-                      : "hover:bg-blue-100 dark:hover:bg-blue-900/30"
-                  }
-                  onClick={() => toggleSkill(skill)}
-                >
-                  <Filter className="w-3 h-3 mr-1" />
-                  {skill}
-                </Button>
-              ))}
+                  {allSkills.map((skill) => (
+                    <Button
+                      key={skill}
+                      size="sm"
+                      variant="outline"
+                      className={`transition-all ${
+                        selectedSkills.includes(skill)
+                          ? "bg-blue-600 text-white hover:bg-blue-700 border-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600 dark:border-blue-500"
+                          : "hover:bg-blue-50 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700"
+                      }`}
+                      onClick={() => toggleSkill(skill)}
+                    >
+                      {skill}
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
             {renderCards(filteredByTab("organizational"))}
           </TabsContent>
